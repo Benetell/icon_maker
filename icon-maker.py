@@ -6,7 +6,7 @@ import numpy as np
 # Kép beolvasása
 img = cv.imread('icon_maker\\images\\pencil.jpg', cv.IMREAD_ANYCOLOR)
 
-def rescale(frame, size, interpolation):
+def icon(frame, size, interpolation):
     two_d = np.float32(frame.reshape((-1,3)))
     criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, 10, 1.0)
     _,label, center = cv.kmeans(two_d, 8, None , criteria, attempts=10, flags=cv.KMEANS_RANDOM_CENTERS)
@@ -20,7 +20,7 @@ def rescale(frame, size, interpolation):
     resized = cv.resize(res, dimensions2, interpolation)
     return resized
 
-img_processed = rescale(img, 32, cv.INTER_NEAREST)
+img_processed = icon(img, 32, cv.INTER_NEAREST)
 
 
 cv.imwrite("icon_maker\\results\\result.jpg", img_processed)
