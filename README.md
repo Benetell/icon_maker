@@ -86,5 +86,6 @@ Az eredmény:
 
 ## Források 
 https://docs.opencv.org/
+
 https://www.youtube.com/watch?v=oXlwWbU8l2o&t=7538s
 
