@@ -1,25 +1,29 @@
+
+
 import cv2 as cv
 import numpy as np
 
-# 16, 24, 32, 48,64 --- 16 szín
-# felbontás és bitmélység változtatás
-
-# - beolvasás
-img = cv.imread('.\images\Screenshot_3.png', cv.IMREAD_ANYCOLOR)
-
+# Kép beolvasása
+img = cv.imread('icon_maker\\images\\pencil.jpg', cv.IMREAD_ANYCOLOR)
 
 def rescale(frame, size, interpolation):
-    dimensions = (size, size)
+    two_d = np.float32(frame.reshape((-1,3)))
+    criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, 10, 1.0)
+    _,label, center = cv.kmeans(two_d, 8, None , criteria, attempts=10, flags=cv.KMEANS_RANDOM_CENTERS)
 
-    return cv.resize(frame, dimensions, interpolation=interpolation)
+    center = np.uint8(center)
+    res = center[label.flatten()]
+    res = res.reshape((frame.shape))
 
-cv.imshow("jolesz.jpg", img)
 
-#img = np.uint(img) * 256
-#cv.imshow("lofz", img)
+    dimensions2 = (size, size)
+    resized = cv.resize(res, dimensions2, interpolation)
+    return resized
 
-img_processed1 = rescale(img, 32, cv.INTER_NEAREST)
-#img_processed2 = rescale(img_processed1, 16, cv.INTER_NEAREST)
+img_processed = rescale(img, 32, cv.INTER_NEAREST)
 
-cv.imwrite("jolesz2.jpg", img_processed1)
+
+cv.imwrite("icon_maker\\results\\result.jpg", img_processed)
+
 cv.waitKey(0)
+cv.destroyAllWindows()
