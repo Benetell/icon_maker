@@ -7,9 +7,9 @@ Utána kellett néznem az OpenCV működésének, azon belül ezekre volt szüks
 -   k-means clustering OpenCV által, mert ez szükséges a kvantáláshoz
 
 # Kép beolvasása
-A képek amin teszteltem az **images** mappában helyeztem el, egy ceruzát ábrázol:
+A képet amin teszteltem az **images** mappában helyeztem el, egy "red" feliratot ábrázol:
 
-![alt text](images/pencil.jpg)
+![alt text](red.jpg)
 ```
 import cv2 as cv
 img = cv.imread('.\images\Screenshot_3.png')
@@ -23,13 +23,13 @@ A  OpenCV resize függvénye a kép felbontását az adott méretre változtatja
 ```
 Például ha 32-re szeretnénk csökkenteni a felbontást:
 
-![alt text](images/size32.jpg)
+![alt text](image-3.png)
 ```
 img_processed = cv.resize(img, (32,32), cv.INTER_NEAREST)
 ```
 Ha pipelineként kezeljük és az előbbi képet ismét beadjuk a rescale függvénynek, visszanagyítva pl 300x300 pixelre, akkor jobban látható az eredmény.
 
-![alt text](images/size32_resized300.jpg)
+![alt text](image-4.png)
 ```
 img_processed2 = cv.resize(img_processed, (500,500), cv.INTER_NEAREST)
 ```
@@ -45,7 +45,7 @@ Az OpenCV 3D array-ként olvas be egy képet:
 ```
 print(img.shape)    #(184, 201, 3)*
 ```
-Tehát a ceruza képe 184 sorból, 201 oszlopból és 3 csatornából (általában RGB, de OpenCv esetén BRG) áll. Ezt át kell konvertálni float 32 típusú 2D tömbbé a kmeans függvény számára.
+Tehát a teszt képem 184 sorból, 201 oszlopból és 3 csatornából (általában RGB, de OpenCv esetén BRG) áll. Ezt át kell konvertálni float 32 típusú 2D tömbbé a kmeans függvény számára.
 ```
 two_d = np.float32( img.reshape((-1,3)) )
 ```
@@ -82,7 +82,20 @@ A függvénynek argumentumként meg kell adni a képet, az elvárt felbontás m�
 
 Az eredmény:
 
-![alt text](results/result.jpg)
+![alt text](image-5.png)
+
+# Milyen képekből lesznek jó ikonok
+
+## Színek
+
+Teszteltem több színen a függvényt, az eredmények a resultsban láthatóak. Nem találtam kifejezett színt amire jobban vagy rosszabbul működne.
+
+Viszont színkörön tesztelve az látszik, hogy a kvantálás miatt a színek elvesztették árnyalataikat, így egy olyan kép, aminek az információtartalmában nagy szerepet játszanak a rajta lévő árnyalatok nem lesz jó ikon.
+![alt text](image-2.png)
+
+## Részletgazdagság
+
+Egy részletgazdag kép szintén elveszti az információtartalmát ikonként, így minél egyszerűbb képek kellenek.
 
 ## Források 
 https://docs.opencv.org/

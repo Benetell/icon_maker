@@ -4,7 +4,7 @@ import cv2 as cv
 import numpy as np
 
 # Kép beolvasása
-img = cv.imread('icon_maker\\images\\pencil.jpg', cv.IMREAD_ANYCOLOR)
+img = cv.imread('icon_maker\\images\\red.jpg', cv.IMREAD_ANYCOLOR)
 
 def rescale(frame, size, interpolation):
     two_d = np.float32(frame.reshape((-1,3)))
@@ -23,7 +23,7 @@ def rescale(frame, size, interpolation):
 img_processed = rescale(img, 32, cv.INTER_NEAREST)
 
 
-cv.imwrite("icon_maker\\results\\result.jpg", img_processed)
+cv.imwrite("icon_maker\\images\\final.jpg", img_processed)
 
 cv.waitKey(0)
 cv.destroyAllWindows()
