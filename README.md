@@ -27,7 +27,7 @@ Például ha 32-re szeretnénk csökkenteni a felbontást:
 ```
 img_processed = cv.resize(img, (32,32), cv.INTER_NEAREST)
 ```
-Ha pipelineként kezeljük és az előbbi képet ismét beadjuk a rescale függvénynek, visszanagyítva pl 300x300 pixelre, akkor jobban látható az eredmény.
+Ha az előbbi képet újra feldolgozzuk a **resize** függvénnyel, és nagyobb méretre állítjuk vissza (pl. 300x300 pixel), a pixelizált hatás jobban látható lesz.
 
 ![alt text](image-4.png)
 ```
@@ -39,7 +39,7 @@ A kvantálás csökkenti a képen megjelenő különböző színek számát. Pé
 
 ## K-means Clustering
 
-Eddig csak neurális hálókkal kapcsolatban használtam, de úgy tűnik bevett szokás színkvantálásra is használni, amit logikus ha a funkcionalitását tekintjük: Adott elemű csoportokra oszt és az egy csoportban lévő elemeken azonos műveleteket végez.
+Eddig csak neurális hálókkal kapcsolatban használtam, de úgy tűnik bevett szokás színkvantálásra is használni, ami logikus ha a funkcionalitását tekintjük: csoportokat hoz létre.
 
 Az OpenCV 3D array-ként olvas be egy képet:
 ```
@@ -54,10 +54,9 @@ Ezután az átalakítás után a tömb minden sora egy pixelt reprezentál, az o
 
 -   centroid: a **k** db csoport **k** db színe.
 
-A függvény minden pixelhez hozzárendeli a hozzá legközelebbi centroidot, majd újraszámolja a benne található színek átlagát és frissíti a centroidokat. 
-
+A k-means algoritmus célja, hogy a képen található színeket úgy csoportosítsa, hogy minden pixel a hozzá legközelebbi "centroidhoz" kerüljön. A centroid a csoport középpontja, ami egy adott színértéket reprezentál. Az algoritmus addig ismétli a pixelek centroidhoz rendelését és centroidok frissítését, amíg a centroidok helye már nem változik jelentősen, vagy amíg el nem ér egy előre meghatározott maximális iterációszámot.
 Ezután definiálni kell egy leállási kritériumot. Én a dokumentációban ajánlott értékeket adtam meg, így akkor fog leállni az algoritmus ha eléri a 10 iterációt, vagy a centroidok változási rátája 1.0 alá kerül.
-A kmeans függvény argumentumaiba megadom a tömböt és a kritériumot, emellett ami még fontos, hogy véletlenszerűen fogja a kezdő középpontot kiválasztani minden próbálkozásnál.3 eredményt ad, ezekből kettő fontos:
+A kmeans függvény argumentumaiba megadom a tömböt és a kritériumot, emellett ami még fontos, hogy véletlenszerűen fogja a kezdő középpontot kiválasztani minden próbálkozásnál.Három eredményt ad, ezekből kettő fontos:
 
 -   label: pixelek címkéje, melyik centroidhoz tartoznak
 -   center: a csoportok centroidjai
@@ -100,4 +99,5 @@ Egy részletgazdag kép szintén elveszti az információtartalmát ikonként, �
 ## Források 
 https://docs.opencv.org/
 
+https://www.youtube.com/watch?v=oXlwWbU8l2o&t=7538s
 
